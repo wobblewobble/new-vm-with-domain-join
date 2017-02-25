@@ -3,16 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmName": {
-            "value": "ipsec2"
-        },
-        "localAdminName": {
-            "value": "willem"
+            "value": "ipsec10"
         },
         "domainJoinUserName": {
             "value": "administrator"
         },
         "vmIpAddress": {
-            "value": "10.0.16.101"
+            "value": "10.0.16.10"
         }
     }
 }

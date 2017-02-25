@@ -3,12 +3,12 @@
   "contentVersion": "1.0.0.0",
 
   "parameters": {
-    "storageAccountName": {
+    "ResourceGroupForVNET": {
       "type": "string",
       "metadata": {
-        "description": "The name of _existing_ storage account created to store the VMs disks"
+        "description": "The RG of the _existing_ VNET. Could be the same as the RG for the new VM."
       },
-      "defaultValue": "rgadfs5826"
+      "defaultValue": "RG-ADFS"
     },
     "virtualNetworkName": {
       "type": "string",
@@ -24,6 +24,14 @@
       },
       "defaultValue": "VMs"
     },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of _existing_ storage account created to store the VMs disks"
+      },
+      "defaultValue": "rgadfs5826"
+    },
+
     "vmName": {
       "type": "string",
       "metadata": {
@@ -65,7 +73,7 @@
         "Standard_DS3",
         "Standard_DS3_v2"
       ],
-      "defaultValue": "Standard_DS2_v2"
+      "defaultValue": "Standard_DS1_v2"
     },
     "imageSKU": {
       "type": "string",
@@ -77,19 +85,6 @@
       ],
       "metadata": {
         "description": "Windows Server Version."
-      }
-    },
-    "localAdminName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the local admin account for the VM."
-      },
-      "defaultValue": "adAdministrator"
-    },
-    "localAdminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "The password for the local Administrator account of the new VM."
       }
     },
     "domainNameFQDN": {
@@ -120,7 +115,7 @@
     }
   },
   "variables": {
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+    "vnetID": "[resourceId(parameters('ResourceGroupForVNET'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('SubnetName'))]",
     "backslash": "\\",
     "domainJoinAccount": "[concat(parameters('domainNameFQDN'), variables('backslash'), parameters('domainJoinUserName'))]",
@@ -134,10 +129,13 @@
 
     "vmDataDiskSize": 10,
     "imagePublisher": "MicrosoftWindowsServer",
-    "imageOffer": "WindowsServer"
-  },
-  "resources": [
+    "imageOffer": "WindowsServer",
 
+    "localAdminName": "adAdministrator",
+    "localAdminPassword": "[concat(uniqueString(resourceGroup().id, 'aasdfveas##1Ax!'), 'kumislk!443')]"
+  },
+
+  "resources": [
     {
       "name": "[variables('vmNicName')]",
       "type": "Microsoft.Network/networkInterfaces",
@@ -174,8 +172,8 @@
         },
         "osProfile": {
           "computerName": "[parameters('vmName')]",
-          "adminUsername": "[parameters('localAdminName')]",
-          "adminPassword": "[parameters('localAdminPassword')]"
+          "adminUsername": "[variables('localAdminName')]",
+          "adminPassword": "[variables('localAdminPassword')]"
         },
         "storageProfile": {
           "imageReference": {
@@ -201,7 +199,7 @@
               "caching": "None",
               "diskSizeGB": "[variables('vmDataDiskSize')]",
               "lun": 0,
-              "createOption": "empty"
+              "createOption": "Empty"
             }
           ]
         },
