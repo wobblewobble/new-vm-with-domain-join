@@ -164,7 +164,7 @@
           "vmSize": "[parameters('VMSize')]"
         },
         "osProfile": {
-          "computerName": "[concat(variables('vmList')[copyIndex()], '-nic')]",
+          "computerName": "[variables('vmList')[copyIndex()]]",
           "adminUsername": "[variables('localAdminName')]",
           "adminPassword": "[variables('localAdminPassword')]"
         },
