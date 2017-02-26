@@ -176,19 +176,19 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(variables('vmList')[copyIndex()],'-osdisk')]",
+            "name": "[concat(variables('vmList')[copyIndex()],'-osdisk1-', substring(uniqueString(resourceGroup().id), 6))]",
             "vhd": {
-              "uri": "[concat('http://',parameters('StorageAccountName'),'.blob.core.windows.net/vhds0/', variables('vmList')[copyIndex()],'-OSDisk-1.vhd')]"
+              "uri": "[concat('http://',parameters('StorageAccountName'),'.blob.core.windows.net/vhds0/', concat(variables('vmList')[copyIndex()],'-osdisk1-', substring(uniqueString(resourceGroup().id), 6)), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
           },
           "dataDisks": [
             {
+              "name": "[concat(variables('vmList')[copyIndex()],'-datadisk1-', substring(uniqueString(resourceGroup().id), 6))]",
               "vhd": {
-                "uri": "[concat('http://',parameters('StorageAccountName'),'.blob.core.windows.net/vhds0/', variables('vmList')[copyIndex()],'-DataDisk-1.vhd')]"
+                "uri": "[concat('http://',parameters('StorageAccountName'),'.blob.core.windows.net/vhds0/', concat(variables('vmList')[copyIndex()],'-datadisk1-', substring(uniqueString(resourceGroup().id), 6)), '.vhd')]"
               },
-              "name": "[concat(variables('vmList')[copyIndex()],'-datadisk-1')]",
               "caching": "None",
               "diskSizeGB": "[variables('vmDataDiskSize')]",
               "lun": 0,
