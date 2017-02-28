@@ -8,34 +8,34 @@
       "metadata": {
         "description": "The RG of the _existing_ VNET. Could be the same as the RG for the new VM."
       },
-      "defaultValue": "RG-ADFS"
+      "defaultValue": "bongo-0102-rg"
     },
     "virtualNetworkName": {
       "type": "string",
       "metadata": {
         "description": "The name of _existing_ Virtual Network."
       },
-      "defaultValue": "sol3-VNET"
+      "defaultValue": "adVNET"
     },
     "subnetName": {
       "type": "string",
       "metadata": {
         "description": "The name of the _existing_ subnet in the VNET."
       },
-      "defaultValue": "VMs"
+      "defaultValue": "adSubnet"
     },
     "storageAccountName": {
       "type": "string",
       "metadata": {
         "description": "The name of _existing_ storage account created to store the VMs disks"
       },
-      "defaultValue": "rgadfs5826"
+      "defaultValue": "bongo-0102-sa"
     },
 
     "vmList": {
       "type": "string",
       "metadata": {
-        "description": "One ore more VM names, seperated by comma: vm1,vm2"
+        "description": "One ore more VM names, seperated by comma: bongo-vm1,bongo-vm2"
       }
     },
     "vmSize": {
@@ -65,7 +65,7 @@
         "Standard_DS3",
         "Standard_DS3_v2"
       ],
-      "defaultValue": "Standard_DS1_v2"
+      "defaultValue": "Standard_A1"
     },
     "imageSKU": {
       "type": "string",
@@ -84,14 +84,14 @@
       "metadata": {
         "description": "Fully qualified name of the target domain."
       },
-      "defaultValue": "sol.local"
+      "defaultValue": "alpineskihouse.com"
     },
     "ouDN": {
       "type": "string",
       "metadata": {
         "description": "Distinguished Name of the OU"
       },
-      "defaultValue": "ou=other,ou=member servers,ou=myou,dc=sol,dc=local"
+      "defaultValue": "ou=Servers,ou=Willem,dc=alpineskihouse,dc=com"
     },
     "domainJoinUserName": {
       "type": "string",
